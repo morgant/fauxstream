@@ -213,12 +213,10 @@ echo "): ${resolution}${offset}\n"
 GLOBAL="\
 -hide_banner \
 -loglevel error \
--thread_queue_size 512 \
 -threads $threads\
 "
 
 VIDEO_IN="\
--thread_queue_size 512 \
 -show_region 1 \
 ${video_device} \
 -f x11grab \
@@ -244,13 +242,11 @@ ${video_format} \
 "
 
 MON_IN="\
--thread_queue_size 512 \
 -f sndio \
 -i snd/mon\
 "
 
 MIC_IN="\
--thread_queue_size 512 \
 -f sndio \
 -i "$mic_device"\
 "
@@ -276,7 +272,7 @@ if [ $noaudio -lt 1 -a $mic -lt 1 ]; then
     $MON_IN \
     $AUDIO_CONV -f nut pipe:1 | \
 	ffmpeg $GLOBAL \
-    -thread_queue_size 512 -f nut -itsoffset $audiooffset -i pipe:0 \
+    -f nut -itsoffset $audiooffset -i pipe:0 \
 		$VIDEO_IN $VIDEO_CONV -c:a copy \
     -f "${container}" \"$filename\""
 elif [ $noaudio -lt 1 ]; then
@@ -287,7 +283,7 @@ elif [ $noaudio -lt 1 ]; then
 		-filter_complex \"${AUDIOMERGE}\" -map '[a]' \
     $AUDIO_CONV -f nut pipe:1 | \
 	ffmpeg $GLOBAL \
-    -thread_queue_size 512 -f nut -itsoffset $audiooffset -i pipe:0 \
+    -f nut -itsoffset $audiooffset -i pipe:0 \
 		$VIDEO_IN $VIDEO_CONV -c:a copy \
     -f "${container}" \"$filename\""
 else
