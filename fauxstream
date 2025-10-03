@@ -147,8 +147,8 @@ else
 		scaleres="scale=${scaleres},"
 	fi
 	video_format="-vf "${scaleres}format=yuv420p""
-	video_output_fps="-r $framerate"
 fi
+video_output_fps="-r $framerate"
 
 bufsize=`expr $video_bitrate \* 2`
 gop=`expr $framerate \* 2`
